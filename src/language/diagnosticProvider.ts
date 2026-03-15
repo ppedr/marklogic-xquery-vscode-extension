@@ -1219,12 +1219,16 @@ async function readModuleExports(uri: vscode.Uri): Promise<ModuleExports | null>
   const modulePrefix = modulePrefixMatch ? modulePrefixMatch[1] : null;
 
   const functions = new Set<string>();
+  // Capture the full annotation/modifier block so we can detect %private / private
   const funcHeadRe =
-    /\bdeclare\s+(?:(?:%[\w:]+|private|public)\s+)*function\s+([\w:-]+)\s*\(/g;
+    /\bdeclare\s+((?:(?:%[\w:]+|private|public)\s+)*)function\s+([\w:-]+)\s*\(/g;
   let m: RegExpExecArray | null;
   funcHeadRe.lastIndex = 0;
   while ((m = funcHeadRe.exec(stripped)) !== null) {
-    const fullName = m[1];
+    const modifiers = m[1];
+    const fullName  = m[2];
+    // Skip private functions — they are not visible to importing modules
+    if (/\bprivate\b/.test(modifiers) || /%private\b/.test(modifiers)) continue;
     // Count parameters via balanced-paren scan
     let i = m.index + m[0].length;
     let depth = 1, arity = 0;
