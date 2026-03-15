@@ -1,0 +1,473 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "XQuery",
+  "scopeName": "source.xquery",
+  "fileTypes": [".xq", ".xqy", ".xquery", ".xqm", ".xql"],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#pragma" },
+    { "include": "#version-declaration" },
+    { "include": "#module-declaration" },
+    { "include": "#namespace-declaration" },
+    { "include": "#import-declaration" },
+    { "include": "#prolog-declaration" },
+    { "include": "#annotation" },
+    { "include": "#xml-constructor" },
+    { "include": "#builtin-types" },
+    { "include": "#xpath-axes" },
+    { "include": "#keywords-control" },
+    { "include": "#keywords-marklogic" },
+    { "include": "#operators-comparison-word" },
+    { "include": "#operators-logical" },
+    { "include": "#operators-arithmetic" },
+    { "include": "#operators-range" },
+    { "include": "#operators-symbol" },
+    { "include": "#function-call-marklogic" },
+    { "include": "#function-call-standard" },
+    { "include": "#function-decl-name" },
+    { "include": "#computed-constructor" },
+    { "include": "#function-call-local" },
+    { "include": "#keywords-other" },
+    { "include": "#constants" },
+    { "include": "#variable" },
+    { "include": "#string-double" },
+    { "include": "#string-single" },
+    { "include": "#number" }
+  ],
+  "repository": {
+
+    "comment": {
+      "name": "comment.block.xquery",
+      "begin": "\\(:",
+      "end": ":\\)",
+      "comment": "XQuery block comment. Supports one level of nesting via applyEndPatternLast. Deeper nesting is not supported by TextMate grammars.",
+      "applyEndPatternLast": true,
+      "patterns": [
+        { "include": "#comment" }
+      ]
+    },
+
+    "pragma": {
+      "name": "meta.pragma.xquery",
+      "begin": "\\(#",
+      "end": "#\\)",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.pragma.begin.xquery" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.pragma.end.xquery" }
+      },
+      "patterns": [
+        {
+          "match": "[a-zA-Z_][\\w\\-]*:[a-zA-Z_][\\w\\-]*",
+          "name": "entity.name.pragma.xquery"
+        }
+      ]
+    },
+
+    "version-declaration": {
+      "match": "\\b(xquery)\\s+(version)\\b",
+      "captures": {
+        "1": { "name": "keyword.other.xquery" },
+        "2": { "name": "keyword.other.xquery" }
+      }
+    },
+
+    "module-declaration": {
+      "match": "\\b(module)\\s+(namespace)\\s+([a-zA-Z_][\\w\\-]*)\\s*(=)",
+      "captures": {
+        "1": { "name": "keyword.other.xquery" },
+        "2": { "name": "keyword.other.xquery" },
+        "3": { "name": "entity.name.namespace.xquery" },
+        "4": { "name": "keyword.operator.xquery" }
+      }
+    },
+
+    "namespace-declaration": {
+      "patterns": [
+        {
+          "match": "\\b(declare)\\s+(default)\\s+(element|function)\\s+(namespace)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.xquery" },
+            "2": { "name": "keyword.other.xquery" },
+            "3": { "name": "keyword.other.xquery" },
+            "4": { "name": "keyword.other.xquery" }
+          }
+        },
+        {
+          "match": "\\b(declare)\\s+(namespace)\\s+([a-zA-Z_][\\w\\-]*)\\s*(=)",
+          "captures": {
+            "1": { "name": "keyword.other.xquery" },
+            "2": { "name": "keyword.other.xquery" },
+            "3": { "name": "entity.name.namespace.xquery" },
+            "4": { "name": "keyword.operator.xquery" }
+          }
+        }
+      ]
+    },
+
+    "import-declaration": {
+      "patterns": [
+        {
+          "match": "\\b(import)\\s+(module)\\s+(namespace)\\s+([a-zA-Z_][\\w\\-]*)\\s*(=)",
+          "captures": {
+            "1": { "name": "keyword.other.xquery" },
+            "2": { "name": "keyword.other.xquery" },
+            "3": { "name": "keyword.other.xquery" },
+            "4": { "name": "entity.name.namespace.xquery" },
+            "5": { "name": "keyword.operator.xquery" }
+          }
+        },
+        {
+          "match": "\\b(import)\\s+(schema)\\s+(namespace)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.xquery" },
+            "2": { "name": "keyword.other.xquery" },
+            "3": { "name": "keyword.other.xquery" }
+          }
+        }
+      ]
+    },
+
+    "prolog-declaration": {
+      "patterns": [
+        {
+          "match": "\\b(declare)\\s+(option)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.xquery" },
+            "2": { "name": "keyword.other.xquery" }
+          }
+        },
+        {
+          "match": "\\b(declare)\\s+(?:(%[\\w:]+)\\s+)*(private\\s+)?(function)\\s+([a-zA-Z_][\\w\\-]*(?::[a-zA-Z_][\\w\\-]*)?)\\s*\\(",
+          "captures": {
+            "1": { "name": "keyword.other.xquery" },
+            "2": { "name": "storage.modifier.annotation.xquery" },
+            "3": { "name": "keyword.other.marklogic" },
+            "4": { "name": "keyword.other.xquery" },
+            "5": { "name": "entity.name.function.xquery" }
+          }
+        },
+        {
+          "match": "\\b(declare)\\s+(?:(%[\\w:]+)\\s+)*(variable)\\b",
+          "captures": {
+            "1": { "name": "keyword.other.xquery" },
+            "2": { "name": "storage.modifier.annotation.xquery" },
+            "3": { "name": "keyword.other.xquery" }
+          }
+        }
+      ]
+    },
+
+    "annotation": {
+      "name": "storage.modifier.annotation.xquery",
+      "match": "%[a-zA-Z_][\\w\\-]*(?::[a-zA-Z_][\\w\\-]*)?"
+    },
+
+    "builtin-types": {
+      "comment": "Placed before keywords-other so item(), text(), node() etc. are scoped as types rather than plain keywords.",
+      "patterns": [
+        {
+          "comment": "Type tests with a QName argument: element(name), attribute(name), etc.",
+          "match": "\\b(element|attribute|schema-element|schema-attribute|document-node|processing-instruction)\\s*\\(\\s*([a-zA-Z_][\\w\\-]*(?::[a-zA-Z_][\\w\\-]*)?)\\s*\\)",
+          "captures": {
+            "1": { "name": "storage.type.xquery" },
+            "2": { "name": "entity.name.type.xquery" }
+          }
+        },
+        {
+          "comment": "Type tests with empty parens or wildcard: node(), item(), text(), element(*), etc.",
+          "name": "storage.type.xquery",
+          "match": "\\b(item|node|element|attribute|text|document-node|comment|processing-instruction|namespace-node|schema-element|schema-attribute|function|map|array)\\s*\\(\\s*(?:\\*|\\s*)\\s*\\)"
+        },
+        {
+          "name": "storage.type.xquery",
+          "match": "\\bempty-sequence\\s*\\(\\s*\\)"
+        },
+        {
+          "comment": "xs: built-in atomic types",
+          "name": "storage.type.xquery",
+          "match": "\\b(xs):(string|integer|decimal|double|float|boolean|date|dateTime|time|duration|anyURI|QName|NOTATION|base64Binary|hexBinary|gYear|gYearMonth|gMonth|gMonthDay|gDay|normalizedString|token|language|NMTOKEN|Name|NCName|ID|IDREF|ENTITY|nonPositiveInteger|negativeInteger|nonNegativeInteger|positiveInteger|unsignedLong|unsignedInt|unsignedShort|unsignedByte|long|int|short|byte|anySimpleType|anyAtomicType|untyped|untypedAtomic|yearMonthDuration|dayTimeDuration)\\b"
+        }
+      ]
+    },
+
+    "xpath-axes": {
+      "comment": "Placed before keywords-other so 'namespace::' is scoped as an axis, not the 'namespace' keyword.",
+      "name": "keyword.other.axis.xquery",
+      "match": "\\b(child|descendant|parent|ancestor|self|following-sibling|preceding-sibling|following|preceding|attribute|namespace|descendant-or-self|ancestor-or-self)::"
+    },
+
+    "keywords-control": {
+      "match": "\\b(for|let|where|order\\s+by|return|if|then|else|typeswitch|case|default|try|catch|switch|satisfies|every|some)\\b",
+      "captures": {
+        "1": { "name": "keyword.control.xquery" }
+      }
+    },
+
+    "keywords-marklogic": {
+      "match": "\\b(private|array-node|boolean-node|number-node|null-node|object-node)\\b",
+      "captures": {
+        "1": { "name": "keyword.other.marklogic" }
+      }
+    },
+
+    "operators-comparison-word": {
+      "match": "\\b(eq|ne|lt|le|gt|ge)\\b",
+      "captures": {
+        "1": { "name": "keyword.operator.comparison.xquery" }
+      }
+    },
+
+    "operators-logical": {
+      "match": "\\b(and|or|not)\\b",
+      "captures": {
+        "1": { "name": "keyword.operator.logical.xquery" }
+      }
+    },
+
+    "operators-arithmetic": {
+      "match": "\\b(div|idiv|mod)\\b",
+      "captures": {
+        "1": { "name": "keyword.operator.arithmetic.xquery" }
+      }
+    },
+
+    "operators-range": {
+      "match": "\\b(to)\\b",
+      "captures": {
+        "1": { "name": "keyword.operator.range.xquery" }
+      }
+    },
+
+    "operators-symbol": {
+      "patterns": [
+        {
+          "name": "keyword.operator.assignment.xquery",
+          "match": ":="
+        },
+        {
+          "name": "keyword.operator.comparison.xquery",
+          "match": "!=|<=|>="
+        },
+        {
+          "name": "keyword.operator.comparison.xquery",
+          "comment": "< and > as operators — only match when not starting an XML constructor.",
+          "match": "(?<=[\\w\\)\\]\\}])\\s*[<>](?![a-zA-Z_!?/])"
+        },
+        {
+          "name": "keyword.operator.xquery",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.xquery",
+          "match": "\\|\\|"
+        },
+        {
+          "name": "keyword.operator.xquery",
+          "match": "!"
+        }
+      ]
+    },
+
+    "keywords-other": {
+      "comment": "Placed after builtin-types and xpath-axes to avoid consuming 'item', 'text', 'node', 'namespace' before those more specific patterns match.",
+      "match": "\\b(declare|module|namespace|import|schema|at|function|variable|option|external|as|in|is|instance|of|treat|cast|castable|ascending|descending|collation|stable|validate|preserve|strip|encoding|allowing|empty|count|group|by|tumbling|sliding|window|start|when|end|only|using|context|item|unordered|ordered)\\b",
+      "captures": {
+        "1": { "name": "keyword.other.xquery" }
+      }
+    },
+
+    "function-call-marklogic": {
+      "comment": "MarkLogic extension namespaces.",
+      "match": "\\b(xdmp|cts|sem|json|spell|thsr|alert|cpf|dls|admin|security|pki|temporal):([a-zA-Z][\\w\\-]*)\\s*(?=\\()",
+      "captures": {
+        "1": { "name": "support.class.marklogic" },
+        "2": { "name": "support.function.marklogic" }
+      }
+    },
+
+    "function-call-standard": {
+      "comment": "W3C standard library namespaces.",
+      "match": "\\b(fn|xs|math|map|array|error|op):([a-zA-Z][\\w\\-]*)\\s*(?=\\()",
+      "captures": {
+        "1": { "name": "support.class.builtin.xquery" },
+        "2": { "name": "support.function.builtin.xquery" }
+      }
+    },
+
+    "function-decl-name": {
+      "comment": "User-defined qualified function call: prefix:localname()",
+      "match": "\\b([a-zA-Z_][\\w\\-]*):([a-zA-Z_][\\w\\-]*)\\s*(?=\\()",
+      "captures": {
+        "1": { "name": "entity.name.namespace.xquery" },
+        "2": { "name": "entity.name.function.xquery" }
+      }
+    },
+
+    "computed-constructor": {
+      "comment": "Computed constructors. Two forms: 'element QName { }' (literal name) and 'element { expr } { }' (dynamic name). Both must be caught before function-call-local, which only fires on '('.",
+      "patterns": [
+        {
+          "comment": "Literal-name form: element name { }, attribute id { }, element ns:local { }",
+          "match": "\\b(element|attribute)\\s+([a-zA-Z_][\\w\\-]*(?::[a-zA-Z_][\\w\\-]*)?)\\s*(?=\\{)",
+          "captures": {
+            "1": { "name": "storage.type.xquery" },
+            "2": { "name": "entity.name.tag.xquery" }
+          }
+        },
+        {
+          "comment": "Dynamic-name / no-name form: element { }, attribute { }, text { }, comment { }, document { }, namespace-node { }",
+          "match": "\\b(element|attribute|text|comment|document|namespace-node)\\s*(?=\\{)",
+          "captures": {
+            "1": { "name": "storage.type.xquery" }
+          }
+        }
+      ]
+    },
+
+    "function-call-local": {
+      "comment": "Unqualified (local) function call: name( without a namespace prefix. Placed last among function patterns so all namespace-prefixed and keyword patterns fire first.",
+      "match": "\\b([a-zA-Z_][\\w\\-]*)\\s*(?=\\()",
+      "captures": {
+        "1": { "name": "entity.name.function.xquery" }
+      }
+    },
+
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.xquery",
+          "match": "\\b(true|false)\\s*\\(\\s*\\)"
+        },
+        {
+          "name": "constant.language.xquery",
+          "match": "\\bempty-sequence\\s*\\(\\s*\\)"
+        }
+      ]
+    },
+
+    "variable": {
+      "name": "variable.other.xquery",
+      "match": "\\$[a-zA-Z_][\\w\\-]*(?::[a-zA-Z_][\\w\\-]*)?"
+    },
+
+    "string-double": {
+      "name": "string.quoted.double.xquery",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.xquery",
+          "match": "\"\""
+        },
+        {
+          "name": "constant.character.entity.xquery",
+          "match": "&(?:amp|lt|gt|apos|quot);"
+        }
+      ]
+    },
+
+    "string-single": {
+      "name": "string.quoted.single.xquery",
+      "begin": "'",
+      "end": "'",
+      "patterns": [
+        {
+          "name": "constant.character.escape.xquery",
+          "match": "''"
+        },
+        {
+          "name": "constant.character.entity.xquery",
+          "match": "&(?:amp|lt|gt|apos|quot);"
+        }
+      ]
+    },
+
+    "number": {
+      "patterns": [
+        {
+          "name": "constant.numeric.xquery",
+          "match": "\\b[0-9]+(?:\\.[0-9]+)?[eE][+\\-]?[0-9]+\\b",
+          "comment": "Double: 2.5e10"
+        },
+        {
+          "name": "constant.numeric.xquery",
+          "match": "\\b[0-9]+\\.[0-9]+\\b",
+          "comment": "Decimal: 3.14"
+        },
+        {
+          "name": "constant.numeric.xquery",
+          "match": "\\b[0-9]+\\b",
+          "comment": "Integer: 42"
+        }
+      ]
+    },
+
+    "xml-constructor": {
+      "comment": "XML element constructors. Heuristic: < followed by a valid XML name, not preceded by a word char, ), or ] (which implies comparison).",
+      "begin": "(?<![\\w\\)\\]])(<)([a-zA-Z_][\\w\\-]*(?::[a-zA-Z_][\\w\\-]*)?)(?=[\\s/>])",
+      "end": "(?:</[a-zA-Z_][\\w\\-]*(?::[a-zA-Z_][\\w\\-]*)?\\s*>|/>)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.xquery" },
+        "2": { "name": "entity.name.tag.xquery" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.tag.end.xquery" }
+      },
+      "patterns": [
+        { "include": "#xml-attribute" },
+        { "include": "#xml-expression-block" },
+        { "include": "#comment" },
+        { "include": "#xml-constructor" }
+      ]
+    },
+
+    "xml-attribute": {
+      "match": "([a-zA-Z_][\\w\\-]*(?::[a-zA-Z_][\\w\\-]*)?)\\s*(=)\\s*(\"[^\"]*\"|'[^']*')",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xquery" },
+        "2": { "name": "keyword.operator.xquery" },
+        "3": { "name": "string.quoted.xquery" }
+      }
+    },
+
+    "xml-expression-block": {
+      "comment": "Embedded XQuery expression inside XML literal: { expr }",
+      "begin": "\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.embedded.begin.xquery" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.embedded.end.xquery" }
+      },
+      "patterns": [
+        { "include": "#comment" },
+        { "include": "#builtin-types" },
+        { "include": "#xpath-axes" },
+        { "include": "#keywords-control" },
+        { "include": "#keywords-marklogic" },
+        { "include": "#operators-comparison-word" },
+        { "include": "#operators-logical" },
+        { "include": "#operators-arithmetic" },
+        { "include": "#operators-range" },
+        { "include": "#operators-symbol" },
+        { "include": "#keywords-other" },
+        { "include": "#function-call-marklogic" },
+        { "include": "#function-call-standard" },
+        { "include": "#function-decl-name" },
+        { "include": "#computed-constructor" },
+        { "include": "#function-call-local" },
+        { "include": "#constants" },
+        { "include": "#variable" },
+        { "include": "#string-double" },
+        { "include": "#string-single" },
+        { "include": "#number" },
+        { "include": "#xml-constructor" },
+        { "include": "#xml-expression-block" }
+      ]
+    }
+
+  }
+}

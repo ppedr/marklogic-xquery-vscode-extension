@@ -1,0 +1,27 @@
+XQuery + MarkLogic — VSCode Extension
+Copyright 2026 marklogic-xquery contributors
+
+This product is licensed under the Apache License, Version 2.0.
+You may obtain a copy of the License at:
+    http://www.apache.org/licenses/LICENSE-2.0
+
+---
+
+This project is a port and derivative work of:
+
+  marklogic-intellij-plugin
+  Copyright 2013-2017 Grzegorz Ligas and additional contributors
+  https://github.com/overstory/marklogic-intellij-plugin
+  Licensed under the Apache License, Version 2.0
+
+The original work provided the XQuery grammar definitions, lexer rules,
+and language constructs that informed this VSCode extension.
+
+---
+
+DISCLAIMER
+
+"MarkLogic" is a registered trademark of Progress Software Corporation.
+This project is an independent community tool and is not affiliated with,
+endorsed by, or officially supported by Progress Software Corporation or
+MarkLogic, Inc.

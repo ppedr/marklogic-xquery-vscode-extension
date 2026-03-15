@@ -1,0 +1,33 @@
+# Source files (bundled into dist/)
+src/**
+
+# TypeScript config and build scripts
+tsconfig.json
+esbuild.js
+
+# Tests
+test/**
+
+# Node modules
+node_modules/**
+
+# Build artifacts (only dist/ is needed)
+out/**
+
+# Dev/config files
+.vscode/**
+.github/**
+.claude/**
+CLAUDE.md
+LINTER-ROADMAP.md
+.gitignore
+.vscodeignore
+.eslintrc*
+.prettierrc*
+*.map
+*.vsix
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

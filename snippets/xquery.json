@@ -1,0 +1,104 @@
+{
+  "XQuery Version (MarkLogic)": {
+    "prefix": "xqversion",
+    "body": ["xquery version \"1.0-ml\";", "", "$0"],
+    "description": "XQuery version declaration for MarkLogic"
+  },
+  "Module Declaration": {
+    "prefix": "module",
+    "body": [
+      "xquery version \"1.0-ml\";",
+      "module namespace ${1:prefix} = \"${2:http://example.com/module}\";",
+      "",
+      "$0"
+    ],
+    "description": "XQuery module namespace declaration"
+  },
+  "Import Module": {
+    "prefix": "import",
+    "body": [
+      "import module namespace ${1:prefix} = \"${2:uri}\"",
+      "  at \"${3:path.xqy}\";",
+      "$0"
+    ],
+    "description": "Import an XQuery module"
+  },
+  "Declare Function": {
+    "prefix": "fn",
+    "body": [
+      "declare function ${1:local}:${2:name}(",
+      "  $${3:param} as ${4:xs:string}",
+      ") as ${5:item()*}",
+      "{",
+      "  $0",
+      "};"
+    ],
+    "description": "Declare an XQuery function"
+  },
+  "Declare Variable": {
+    "prefix": "var",
+    "body": ["declare variable $${1:name} as ${2:xs:string} := ${3:\"value\"};"],
+    "description": "Declare an XQuery variable"
+  },
+  "FLWOR Expression": {
+    "prefix": "flwor",
+    "body": [
+      "for $${1:item} in ${2:sequence}",
+      "let $${3:var} := ${4:expr}",
+      "where ${5:condition}",
+      "order by $${1:item} ${6|ascending,descending|}",
+      "return",
+      "  $0"
+    ],
+    "description": "FLWOR expression"
+  },
+  "If-Then-Else": {
+    "prefix": "if",
+    "body": ["if (${1:condition})", "then ${2:value}", "else ${3:other}"],
+    "description": "XQuery if-then-else expression"
+  },
+  "Typeswitch": {
+    "prefix": "typeswitch",
+    "body": [
+      "typeswitch ($${1:node})",
+      "  case element(${2:name}) return ${3:expr}",
+      "  case text() return ${4:expr}",
+      "  default return ${5:expr}"
+    ],
+    "description": "XQuery typeswitch expression"
+  },
+  "Try-Catch": {
+    "prefix": "try",
+    "body": ["try {", "  $1", "} catch ($${2:err}) {", "  $0", "}"],
+    "description": "XQuery try-catch expression"
+  },
+  "xdmp:log": {
+    "prefix": "log",
+    "body": ["xdmp:log(${1:\"message\"}, ${2|\"debug\",\"info\",\"warning\",\"error\"|}),"],
+    "description": "Log a message via xdmp:log"
+  },
+  "cts:search": {
+    "prefix": "search",
+    "body": [
+      "cts:search(",
+      "  ${1:collection(\"default\")},",
+      "  ${2:cts:and-query(())},",
+      "  ${3:(\"unfiltered\")}",
+      ")"
+    ],
+    "description": "cts:search query"
+  },
+  "xdmp:eval": {
+    "prefix": "eval",
+    "body": [
+      "xdmp:eval(",
+      "  '${1:xquery expression}',",
+      "  (),",
+      "  <options xmlns=\"xdmp:eval\">",
+      "    <database>{xdmp:database(\"${2:Documents}\")}</database>",
+      "  </options>",
+      ")"
+    ],
+    "description": "Evaluate an XQuery expression via xdmp:eval"
+  }
+}

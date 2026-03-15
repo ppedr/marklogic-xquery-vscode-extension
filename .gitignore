@@ -1,0 +1,32 @@
+# Build output
+dist/
+out/
+
+# Node
+node_modules/
+
+# Package artifacts
+*.vsix
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Claude Code
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+*.code-workspace
+
+# Test output
+.vscode-test/
+
+# Extra
+LINTER-ROADMAP.md
+CLAUDE.md
