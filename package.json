@@ -1,5 +1,5 @@
 {
-  "name": "marklogic-xquery-vscode-extension",
+  "name": "marklogic-xquery",
   "displayName": "XQuery + MarkLogic",
   "description": "XQuery language support with MarkLogic 1.0-ml dialect",
   "version": "0.1.0",

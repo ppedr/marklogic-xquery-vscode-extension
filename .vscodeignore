@@ -19,7 +19,7 @@ out/**
 .github/**
 .claude/**
 CLAUDE.md
-LINTER-ROADMAP.md
+ROADMAP.md
 .gitignore
 .vscodeignore
 .eslintrc*
