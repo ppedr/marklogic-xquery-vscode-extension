@@ -4,10 +4,11 @@
   "description": "XQuery language support with MarkLogic 1.0-ml dialect",
   "version": "0.1.0",
   "publisher": "ppfjuni",
+  "icon": "icon.png",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marklogic-xquery/marklogic-xquery-vscode"
+    "url": "https://github.com/ppedr/marklogic-xquery-vscode-extension"
   },
   "engines": {
     "vscode": "^1.85.0"
